@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cb0i5jqprp6ki"]
+[gd_scene load_steps=10 format=3 uid="uid://cb0i5jqprp6ki"]
 
 [ext_resource type="Script" path="res://scripts/LauncherNav.gd" id="1_f8rmi"]
 [ext_resource type="PackedScene" uid="uid://ce6pg4ga7c1qi" path="res://scenes/menu_scroll.tscn" id="2_hm11x"]
@@ -18,6 +18,11 @@ font = ExtResource("5_6dfxj")
 font_size = 50
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(1, 5)
+
+[sub_resource type="LabelSettings" id="LabelSettings_w8d8a"]
+font = ExtResource("5_6dfxj")
+font_size = 50
+shadow_size = 0
 
 [node name="Main" type="Control" node_paths=PackedStringArray("menu", "preview", "TitleLabel", "DescObject", "AuthorObject", "AuthLabel", "TypeLabel", "GenreLabel", "DescLabel", "YearLabel", "GradLabel")]
 layout_mode = 3
@@ -41,6 +46,7 @@ GradLabel = NodePath("Description info/Grad")
 
 [node name="Menu Scroll" parent="." instance=ExtResource("2_hm11x")]
 layout_mode = 1
+screenCenter = null
 
 [node name="TextureRect" type="TextureRect" parent="Menu Scroll"]
 modulate = Color(1, 1, 1, 0.481)
@@ -114,7 +120,7 @@ offset_left = 1306.0
 offset_top = 11.0
 offset_right = 1906.0
 offset_bottom = 211.0
-text = "Graduating: 1999"
+text = "Class of 1999"
 label_settings = ExtResource("6_jfdgb")
 horizontal_alignment = 2
 autowrap_mode = 2
@@ -188,4 +194,26 @@ offset_right = 177.0
 offset_bottom = 51.0
 text = "Play"
 label_settings = SubResource("LabelSettings_xjp7k")
+horizontal_alignment = 1
+
+[node name="UpLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 874.0
+offset_top = 1024.0
+offset_right = 1013.0
+offset_bottom = 1101.0
+text = "^"
+label_settings = SubResource("LabelSettings_w8d8a")
+horizontal_alignment = 1
+
+[node name="DownLabel" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 1013.0
+offset_top = 1062.0
+offset_right = 1152.0
+offset_bottom = 1139.0
+rotation = 3.14159
+text = "^"
+label_settings = SubResource("LabelSettings_w8d8a")
 horizontal_alignment = 1

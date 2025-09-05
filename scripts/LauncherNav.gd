@@ -48,7 +48,6 @@ var cooldown: bool = false
 #runtime variables
 var current_game : int = 0
 var running_pid = -1
-var is_running
 var quit_hold : Timer
 
 #animation variables
@@ -193,7 +192,7 @@ func fade_in_desc(game:Game):
 	GenreLabel.text = genres
 	DescLabel.text = game.description
 	YearLabel.text = "Released: " + game.creation_year
-	GradLabel.text = "Graduated: " + str(game.grad_year)
+	GradLabel.text = "Class of " + str(game.grad_year)
 	desc_t = TITLE_ANIM_DUR
 	
 	
@@ -213,12 +212,16 @@ func fade_in_desc(game:Game):
 
 #runs when player presses the hide desc
 func pull_up_desc():
+	$UpLabel.visible = false
+	$DownLabel.visible = true
 	detail_view_target = DETAIL_VIEW_OFFSET
 	detail_view_t = DETAIL_VIEW_PULL_DUR
 	animate_desc(0)
 
 #runs when player presses the pull desc
 func pull_down_desc():
+	$UpLabel.visible = true
+	$DownLabel.visible = false
 	detail_view_target = 0
 	detail_view_t = DETAIL_VIEW_PULL_DUR
 	animate_desc(0)
@@ -267,10 +270,10 @@ func animate_desc(delta):
 
 #running games ------------------------------------------------------------------------------------
 func close_game():
-	if is_running and (OS.is_process_running(running_pid) or is_in_debug_mode):
+	if Global.game_running and (OS.is_process_running(running_pid) or is_in_debug_mode):
 		if(!is_in_debug_mode):
 			OS.kill(running_pid)
-			is_running = false
+			Global.game_running = false
 			running_pid = -1
 
 func start_game():
@@ -285,7 +288,7 @@ func start_game():
 			running_pid = OS.create_process(exec_path, ["-f"])
 		else:
 			running_pid = 999999999999999
-		is_running = true
+		Global.game_running = true
 
 # OTHER -------------------------------------------------------------------------------------------
 # cooldown between launching and closing a game
@@ -321,8 +324,8 @@ func _process(delta: float) -> void:
 	#while game is running
 	
 	#autocorrect if PID is closed externally
-	if is_running and (not OS.is_process_running(running_pid) || is_in_debug_mode):
-		is_running = false
+	if Global.game_running and (not OS.is_process_running(running_pid) || is_in_debug_mode):
+		Global.game_running = false
 		_start_cooldown(0.5)
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED, 0)
 		await get_tree().create_timer(0.3).timeout
@@ -339,7 +342,7 @@ func _process(delta: float) -> void:
 	animate_desc(delta)
 
 func _input(_event: InputEvent) -> void:
-	if is_running:
+	if Global.game_running:
 		if Input.is_action_just_pressed("quit"):
 			quit_hold.start()
 		if Input.is_action_just_released("quit"):

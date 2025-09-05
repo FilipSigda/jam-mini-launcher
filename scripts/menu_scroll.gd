@@ -67,10 +67,10 @@ func initialize(arr:Array[Texture2D]) -> void:
 		icon_refs.push_back(icon_instance)
 	update_icon_positions(false)
 
-
-
-
 func _process(delta: float) -> void:
+	if Global.game_running:
+		return
+	
 	#moving the icons
 	if(Input.is_action_just_pressed('right')):
 		looping_delay=0
