@@ -300,6 +300,8 @@ func _ready():
 	#loads in all the games
 	load_all_games(_load_game_folders())
 	
+	current_game = games.size() - 1
+	
 	#Display all in menu
 	menu.on_cursor_changed.connect(on_cursor_update)
 	DisplayIcons()
