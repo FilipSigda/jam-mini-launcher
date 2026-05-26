@@ -35,5 +35,3 @@ The specs and details of the machine have yet to be determined.
   "grad_year": "Year Graduated",
 }
 ```
-# Todo:
-- [ ] Keep track of the # of times a game has been launched and the time a game as spent open, and save it to that game's respective folder as stats.json
